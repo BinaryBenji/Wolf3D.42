@@ -1,0 +1,1 @@
+gcc -o src/wolf3d.h src/main.c libft/libft.a -g -lmlx -framework OpenGL -framework AppKit
