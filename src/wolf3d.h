@@ -8,24 +8,15 @@
 #include <fcntl.h>
 #include "mlx.h"
 
-typedef struct 		s_env
+
+typedef struct 		s_e
 {
 	void 			*mlx;
 	void 			*win;
-	double			x1;
-	double 			x2;
-	double			y1;
-	double			y2; 
-	double			itmax; 
-	double			zoom; 
-	double			img_x;
-	double			img_y;
-	double			c_i;
-	double			c_r;
-	double			z_r;
-	double			z_i;
-	double			i;
-}			   		t_env;
+	int				width;
+	int 			height;
+	int				color;
+}			   		t_e;
 
-void 	draw(t_env env);
+
 #endif
