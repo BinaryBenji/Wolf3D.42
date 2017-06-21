@@ -28,6 +28,22 @@ int 	key_pressed(int keycode, t_e *e)
       	e->planeX = e->planeX * cos(rotSpeed) - e->planeY * sin(rotSpeed);
       	e->planeY = oldPlaneX * sin(rotSpeed) + e->planeY * cos(rotSpeed);
 	}
+	if (keycode == 126)
+	{
+		if(worldMap[int(e->posX + e->dirX * e->moveSpeed)]
+			[int(e->posY)] == false) e->posX += e->dirX * e->moveSpeed;
+      	if(worldMap[int(e->posX)][int(e->posY + e->dirY * e->moveSpeed)] 
+      		== false) e->posY += e->dirY * e->moveSpeed;
+
+	}
+	if (keycode == 125)
+	{
+		if(worldMap[int(e->posX - e->dirX * e->moveSpeed)]
+			[int(e->posY)] == false) e->posX -= e->dirX * e->moveSpeed;
+      	if(worldMap[int(e->posX)][int(e->posY - e->dirY * e->moveSpeed)]
+      		== false) e->posY -= e->dirY * e->moveSpeed;
+	}
+	draw(e);
 	return (0);
 }
 
