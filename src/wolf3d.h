@@ -16,6 +16,18 @@ typedef struct 		s_e
 	int				width;
 	int 			height;
 	int				color;
+	double 			posX;
+	double 			posY;  
+  	double 			dirX;
+  	double 			dirY; 
+  	double 			planeX;
+  	double			planeY;
+  	double 			time;
+  	double 			oldTime;
+  	double 			sideDistX;
+    double 			sideDistY;
+    int 			stepX;
+    int 			stepY;
 }			   		t_e;
 
 
