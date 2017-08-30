@@ -3,7 +3,7 @@
 
 # Install X11 XShm extension
 
-sudo apt-get install --assume-yes install libxext-dev 2>/dev/null
+sudo apt-get install --assume-yes libxext-dev 2>/dev/null
 
 # Setup your OS
 
