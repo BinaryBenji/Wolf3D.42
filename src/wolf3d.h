@@ -6,29 +6,37 @@
 #include <math.h>
 #include "../libft/libft.h"
 #include <fcntl.h>
-#include "mlx.h"
+// #include "mlx.h"
 
 
 typedef struct 		s_e
 {
-	void 			*mlx;
-	void 			*win;
-	int				width;
-	int 			height;
-	int				color;
-	double 			posX;
-	double 			posY;  
-  	double 			dirX;
-  	double 			dirY; 
-  	double 			planeX;
-  	double			planeY;
-  	double 			time;
-  	double 			oldTime;
-  	double 			sideDistX;
-    double 			sideDistY;
-    int 			stepX;
-    int 			stepY;
+	// void 			*mlx;
+	// void 			*win;
+	// int				width;
+	// int 			height;
+	// int				color;
+	// double 			posX;
+	// double 			posY;  
+ //  	double 			dirX;
+ //  	double 			dirY; 
+ //  	double 			planeX;
+ //  	double			planeY;
+ //  	double 			time;
+ //  	double 			oldTime;
+ //  	double 			sideDistX;
+ //    double 			sideDistY;
+ //    int 			stepX;
+ //    int 			stepY;
+      
+      char  **tab;
+      int   sidelen;
+      int   ok;
 }			   		t_e;
+
+int   usage(void);
+int   exiterror(void);
+int   error(void);
 
 
 #endif

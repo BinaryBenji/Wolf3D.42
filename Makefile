@@ -18,7 +18,8 @@ CC = 				gcc
 
 #	Flags for norme + LLDB
 CFLAGS = 			-Wall -Wextra -Werror -g
-GFLAGS =			-lmlx -framework OpenGL -framework AppKit
+#GFLAGS =			-lmlx -framework OpenGL -framework AppKit
+GFLAGS = 			-L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11
 
 #	Headers infos
 HEA_PATH = 			./src
@@ -27,7 +28,8 @@ HEA = 				$(addprefix $(HEA_PATH)/,$(HEA_NAME))
 
 #	Sources infos
 SRC_PATH = 			./src
-SRC_NAME = 			main.c
+SRC_NAME = 			main.c \
+					utils.c
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
 #	Objects infos
