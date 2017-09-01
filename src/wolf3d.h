@@ -28,10 +28,10 @@ typedef struct 		s_e
  //    double 			sideDistY;
  //    int 			stepX;
  //    int 			stepY;
-      
       char  **tab;
       int   sidelen;
       int   ok;
+      int	xchecker;
 }			   		t_e;
 
 int   usage(void);

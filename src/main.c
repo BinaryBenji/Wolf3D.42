@@ -61,34 +61,40 @@
 // 	mlx_loop(e->mlx);
 // }
 
-// t_e		init_map(t_e *e)
-// {
-// 	e->color = 0;
-// 	e->width = 1000;
-// 	e->height = 1000;
-// 	e->posX = 22;
-// 	e->posY = 12;  
-//   	e->dirX = -1;
-//   	e->dirY = 0; 
-//   	e->planeX = 0;
-//   	e->planeY = 0.66;
-//   	e->time = 0;
-//   	e->oldTime = 0;
-//   	e->x = 0;
-//   	e->y = 0;
-// 	return (*e);
-// }
+void	init_map(t_e *e)
+{
+	// e->color = 0;
+	// e->width = 1000;
+	// e->height = 1000;
+	// e->posX = 22;
+	// e->posY = 12;  
+ //  	e->dirX = -1;
+ //  	e->dirY = 0; 
+ //  	e->planeX = 0;
+ //  	e->planeY = 0.66;
+ //  	e->time = 0;
+ //  	e->oldTime = 0;
+ //  	e->x = 0;
+ //  	e->y = 0;
+	e->xchecker = 0;
+}
 
 
-int 	is_line_ok(char *line)
+int 	is_line_ok(char *line, t_e *e)
 {
 	int i;
 
 	i = 0;
 	while (line[i])
 	{
-		if ((ft_isdigit(line[i]) > 0) || (line[i] == 'X'))	
+		if ((ft_isdigit(line[i]) > 0) || (line[i] == 'X'))
+		{
+			if (line[i] == 'X')
+				e->xchecker++;
+			if (e->xchecker > 1)
+				return (0);
 			i++;
+		}
 		else
 			return (0);
 	}
@@ -105,7 +111,7 @@ int 	check_and_parse(int fd, t_e *e)
 	line = NULL;
 	while ((get_next_line(fd, &line)) == 1)
 	{
-		if (is_line_ok(line) == 0)
+		if (is_line_ok(line, e) == 0)
 			return (-1);
 		if (i == 0)
 			previous = ft_strlen(line);
@@ -117,7 +123,8 @@ int 	check_and_parse(int fd, t_e *e)
 		}
 		i++;
 	}
-	e->ok = 2;
+	if (e->xchecker != 1)
+		return (-1);
 	return (1);
 }
 
@@ -146,6 +153,7 @@ int 	main(int argc, char **argv)
 		return (usage());
 	if (!(fd = open(argv[1], O_RDONLY)))
 		return (error());
+	init_map(&e);
 	if (false_map(fd, &e) != 1)
 		return (exiterror());
 	close(fd);
