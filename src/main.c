@@ -10,6 +10,7 @@ void	init_map(t_e *e)
 	e->xchecker = 0;
 	e->south = 0;
 	e->previous = 0;
+	e->i = 0;
 }
 
 /*

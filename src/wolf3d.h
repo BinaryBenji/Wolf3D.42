@@ -34,6 +34,7 @@ typedef struct 		s_e
       unsigned int	previous;
       int 	south;
       int	xchecker;
+      int	i;
 }			   		t_e;
 
 int   usage(void);
