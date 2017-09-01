@@ -1,84 +1,20 @@
 #include "wolf3d.h"
 
-// int 	key_pressed(int keycode, t_e *e)
-// {
-// 	if (keycode == 53) // quit
-// 		exit(0);
-// 	if (keycode == 123)
-// 	{
-// 		double oldDirX;
-// 		double oldPlaneX;
-
-// 		oldDirX = e->dirX;
-// 		e->dirX = e->dirX * cos(-rotSpeed) - e->dirY * sin(-rotSpeed);
-// 		e->dirY = oldDirX * sin(-rotSpeed) + e->dirY * cos(-rotSpeed);
-// 		oldPlaneX = ->planeX;
-// 		e->planeX = e->planeX * cos(-rotSpeed) - e->planeY * sin(-rotSpeed);
-// 	    e->planeY = oldPlaneX * sin(-rotSpeed) + e->planeY * cos(-rotSpeed);	
-// 	}
-// 	if (keycode == 124)
-// 	{
-// 		double oldDirX;
-// 		double oldPlaneX;
-
-// 		oldDirX = e->dirX;
-//       	e->dirX = e->dirX * cos(rotSpeed) - e->dirY * sin(rotSpeed);
-//       	e->dirY = oldDirX * sin(rotSpeed) + e->dirY * cos(rotSpeed);
-//       	oldPlaneX = e->planeX;
-//       	e->planeX = e->planeX * cos(rotSpeed) - e->planeY * sin(rotSpeed);
-//       	e->planeY = oldPlaneX * sin(rotSpeed) + e->planeY * cos(rotSpeed);
-// 	}
-// 	if (keycode == 126)
-// 	{
-// 		if(worldMap[int(e->posX + e->dirX * e->moveSpeed)]
-// 			[int(e->posY)] == false) e->posX += e->dirX * e->moveSpeed;
-//       	if(worldMap[int(e->posX)][int(e->posY + e->dirY * e->moveSpeed)] 
-//       		== false) e->posY += e->dirY * e->moveSpeed;
-
-// 	}
-// 	if (keycode == 125)
-// 	{
-// 		if(worldMap[int(e->posX - e->dirX * e->moveSpeed)]
-// 			[int(e->posY)] == false) e->posX -= e->dirX * e->moveSpeed;
-//       	if(worldMap[int(e->posX)][int(e->posY - e->dirY * e->moveSpeed)]
-//       		== false) e->posY -= e->dirY * e->moveSpeed;
-// 	}
-// 	draw(e);
-// 	return (0);
-// }
-
-// void 	draw(t_e *e)
-// {
-// 	printf("lol");
-// }
-
-// void 	ft_map(t_e *e)
-// {
-// 	e->mlx = mlx_init();
-// 	e->win = mlx_new_window(e->mlx, e->width, e->height, "Wolf3D");
-// 	draw(e);
-// 	mlx_key_hook(e->win, key_pressed, e);
-// 	mlx_loop(e->mlx);
-// }
+/*
+**	Initialize basic parameters
+*/
 
 void	init_map(t_e *e)
 {
-	// e->color = 0;
-	// e->width = 1000;
-	// e->height = 1000;
-	// e->posX = 22;
-	// e->posY = 12;  
- //  	e->dirX = -1;
- //  	e->dirY = 0; 
- //  	e->planeX = 0;
- //  	e->planeY = 0.66;
- //  	e->time = 0;
- //  	e->oldTime = 0;
- //  	e->x = 0;
- //  	e->y = 0;
+	// if (!(e->tab= (char **)malloc(sizeof(char*) * )))
 	e->xchecker = 0;
+	e->south = 0;
+	e->previous = 0;
 }
 
+/*
+**	A line is "ok" if it contains only digits and only one X for one map.
+*/
 
 int 	is_line_ok(char *line, t_e *e)
 {
@@ -101,47 +37,50 @@ int 	is_line_ok(char *line, t_e *e)
 	return (1);
 }
 
-int 	check_and_parse(int fd, t_e *e)
+/*
+**	Checks if every line have same length : only quadrangle are allowed.
+**	Then check content of each line.
+*/
+
+int 	check(int fd, t_e *e)
 {
 	char 			*line;
-	unsigned int 	 i;
-	unsigned int 	previous;
 	
-	i = 0;
 	line = NULL;
 	while ((get_next_line(fd, &line)) == 1)
 	{
 		if (is_line_ok(line, e) == 0)
 			return (-1);
-		if (i == 0)
-			previous = ft_strlen(line);
+		if (e->south == 0)
+			e->previous = ft_strlen(line);
 		else
 		{
-			if (previous != ft_strlen(line))
+			if (e->previous != ft_strlen(line))
 				return (-1);
-			previous = ft_strlen(line);
+			e->previous = ft_strlen(line);
 		}
-		i++;
+		e->south++;
 	}
+	e->east = e->previous;
 	if (e->xchecker != 1)
 		return (-1);
 	return (1);
 }
 
-
+/*
+**	Return cases for false map
+*/
 
 int 	false_map(int fd, t_e *e)
 {
-	if (check_and_parse(fd, e) == -1)
-	{
-		printf("ko map\n");
+	if (check(fd, e) == -1)
 		return (-1);
-	}
-	else
-		printf("ok map\n");
-	e->ok= 1;
 	return (1);
 }
+
+/*
+**	Main
+*/
 
 int 	main(int argc, char **argv)
 {
@@ -157,7 +96,8 @@ int 	main(int argc, char **argv)
 	if (false_map(fd, &e) != 1)
 		return (exiterror());
 	close(fd);
-	// if (!(fd = open(argv[1], O_RDONLY)))
-	// 	return (error());
+	if (!(fd = open(argv[1], O_RDONLY)))
+		return (error());
+	store_tab(fd, &e);
 	return (0);
 }

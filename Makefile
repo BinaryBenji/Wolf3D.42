@@ -29,7 +29,8 @@ HEA = 				$(addprefix $(HEA_PATH)/,$(HEA_NAME))
 #	Sources infos
 SRC_PATH = 			./src
 SRC_NAME = 			main.c \
-					utils.c
+					utils.c \
+					parser.c
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
 #	Objects infos

@@ -29,14 +29,17 @@ typedef struct 		s_e
  //    int 			stepX;
  //    int 			stepY;
       char  **tab;
-      int   sidelen;
+      int   east;
       int   ok;
+      unsigned int	previous;
+      int 	south;
       int	xchecker;
 }			   		t_e;
 
 int   usage(void);
 int   exiterror(void);
 int   error(void);
+void	store_tab(int fd, t_e *e);
 
 
 #endif
