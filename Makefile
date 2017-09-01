@@ -30,7 +30,8 @@ HEA = 				$(addprefix $(HEA_PATH)/,$(HEA_NAME))
 SRC_PATH = 			./src
 SRC_NAME = 			main.c \
 					utils.c \
-					parser.c
+					parser.c \
+					draw.c
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
 #	Objects infos

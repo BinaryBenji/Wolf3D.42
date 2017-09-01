@@ -6,11 +6,12 @@
 
 void	init_map(t_e *e)
 {
-	// if (!(e->tab= (char **)malloc(sizeof(char*) * )))
 	e->xchecker = 0;
 	e->south = 0;
 	e->previous = 0;
 	e->i = 0;
+	e->width = 1200;
+	e->height = 800;
 }
 
 /*
@@ -100,5 +101,6 @@ int 	main(int argc, char **argv)
 	if (!(fd = open(argv[1], O_RDONLY)))
 		return (error());
 	store_tab(fd, &e);
+	ft_map(&e);
 	return (0);
 }

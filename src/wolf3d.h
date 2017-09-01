@@ -6,15 +6,15 @@
 #include <math.h>
 #include "../libft/libft.h"
 #include <fcntl.h>
-// #include "mlx.h"
+#include "mlx.h"
 
 
 typedef struct 		s_e
 {
-	// void 			*mlx;
-	// void 			*win;
-	// int				width;
-	// int 			height;
+	void 			*mlx;
+	void 			*win;
+	int				width;
+	int 			height;
 	// int				color;
 	// double 			posX;
 	// double 			posY;  
@@ -38,6 +38,7 @@ typedef struct 		s_e
 }			   		t_e;
 
 int   usage(void);
+void ft_map(t_e *e);
 int   exiterror(void);
 int   error(void);
 void	store_tab(int fd, t_e *e);
