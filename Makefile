@@ -17,7 +17,7 @@ NAME = 				wolf3d
 CC = 				gcc
 
 #	Flags for norme + LLDB
-CFLAGS = 			-Wall -Wextra -Werror -g
+CFLAGS = 			-Wall -Wextra -Werror -g 
 #GFLAGS =			-lmlx -framework OpenGL -framework AppKit
 GFLAGS = 			-L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11
 
@@ -47,7 +47,8 @@ all: $(NAME)
 
 $(NAME): 			$(OBJ) $(HEA)
 					@make -C libft/
-					@$(CC) $(CFLAGS) $(OBJ) $(GFLAGS) libft/libft.a -o $(NAME)
+					@$(CC) $(CFLAGS) $(OBJ) $(GFLAGS) libft/libft.a -o $(NAME) -lm
+					# Retirer -LM sur les Macs maybe.
 					@echo "Wolf3D compilation complete."
 
 %.o: 				%.c $(HEA)

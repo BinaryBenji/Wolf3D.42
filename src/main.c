@@ -10,8 +10,17 @@ void	init_map(t_e *e)
 	e->south = 0;
 	e->previous = 0;
 	e->i = 0;
-	e->width = 1200;
-	e->height = 800;
+	e->width = 800;
+	e->height = 400;
+
+	e->posX = 22;
+	e->posY = 12;
+	e->dirX = -1;
+	e->dirY = 0;
+	e->planeX = 0;
+	e->planeY = 0.66;
+	e->time = 0;
+	e->oldTime = 0;
 }
 
 /*
@@ -41,6 +50,7 @@ int 	is_line_ok(char *line, t_e *e)
 
 /*
 **	Checks if every line have same length : only quadrangle are allowed.
+**	A map with only one line is not allowed.
 **	Then check content of each line.
 */
 
@@ -65,6 +75,8 @@ int 	check(int fd, t_e *e)
 	}
 	e->east = e->previous;
 	if (e->xchecker != 1)
+		return (-1);
+	if (e->south <= 1)
 		return (-1);
 	return (1);
 }

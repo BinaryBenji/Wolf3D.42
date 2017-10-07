@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <unistd.h>
 #include "../libft/libft.h"
 #include <fcntl.h>
 #include "mlx.h"
@@ -13,21 +14,41 @@ typedef struct 		s_e
 {
 	void 			*mlx;
 	void 			*win;
+	void			*imgptr;
+	char 			*imgstr;
+	int 			endian;
+	int 			s_l;
+	int 			bpp;
+
 	int				width;
 	int 			height;
 	// int				color;
-	// double 			posX;
-	// double 			posY;  
- //  	double 			dirX;
- //  	double 			dirY; 
- //  	double 			planeX;
- //  	double			planeY;
- //  	double 			time;
- //  	double 			oldTime;
- //  	double 			sideDistX;
- //    double 			sideDistY;
- //    int 			stepX;
- //    int 			stepY;
+	double 			posX;
+	double 			posY;
+  	double 			dirX;
+  	double 			dirY; 
+  	double 			planeX;
+  	double			planeY;
+  	double 			time;
+  	double 			oldTime;
+
+  	double			cameraX;
+  	double 			rayPosX;
+  	double			rayPosY;
+  	double 			rayDirX;
+  	double 			rayDirY;
+  	double 			sideDistX;
+    double 			sideDistY;
+    double 			deltaDistX;
+    double 			deltaDistY;
+    int 			stepX;
+    int 			stepY;
+    int 			hit;
+    int 			side;
+    int 			mapX;
+    int				mapY;
+
+
       char  **tab;
       int   east;
       int   ok;
