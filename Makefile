@@ -31,7 +31,9 @@ SRC_PATH = 			./src
 SRC_NAME = 			main.c \
 					utils.c \
 					parser.c \
-					draw.c
+					draw.c \
+					events.c
+					
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
 #	Objects infos

@@ -12,6 +12,12 @@ int 	exiterror(void)
 	exit(-1);
 }
 
+int 	exit_cl(void)
+{
+	exit(0);
+}
+
+
 int 	usage(void)
 {
 	ft_putstr_fd("usage: ./wolf3d [map] \n", 2);

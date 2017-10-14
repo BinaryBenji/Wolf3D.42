@@ -12,7 +12,10 @@ void	init_map(t_e *e)
 	e->i = 0;
 	e->width = 800;
 	e->height = 400;
+	e->x = 0;
 
+	e->rotSpeed = 0.05;
+	e->moveSpeed = 0.05;
 	e->posX = 22;
 	e->posY = 12;
 	e->dirX = -1;

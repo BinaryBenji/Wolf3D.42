@@ -1,18 +1,8 @@
 #include "wolf3d.h"
 
-int	key_pressed(int keycode, t_e *e)
+void 	draw_map(t_e *e)
 {
-	if (keycode == 65307) // Echap
-		exit(0);
-	printf("Keycode : %d\n",keycode);
-	e->ok = 2;
-	return (0);
-}
-
-void draw_map(t_e *e)
-{
-	int x = 0;
-	while (x < e->width)
+	while (e->x < e->width)
 	{
 		e->cameraX = 2;
 		e->rayPosX = e->posX;
@@ -62,11 +52,24 @@ void draw_map(t_e *e)
 				e->mapY += e->stepY;
 				e->side = 1;
 			}
-
+			if (e->tab[e->mapX][e->mapY] > 0)
+				e->hit = 1;
 		}
-		x++;
+		e->x++;
 	}
+	if (e->side == 0)
+		e->perpWallDist = (e->mapX - e->rayPosX + (1 + e->stepX) / 2) / e->rayDirX;
+	else
+		e->perpWallDist = (e->mapY - e->rayPosY + (1 + e->stepY) / 2) / e->rayDirY;
 
+	e->lineHeight = (int)(e->height / e->perpWallDist);
+
+	e->drawStart = -(e->lineHeight) / 2 + e->height / 2;
+	if (e->drawStart < 0)
+		e->drawStart = 0;
+	e->drawEnd = e->lineHeight / 2 + e->height / 2;
+	if (e->drawEnd >= e->height)
+		e->drawEnd = e->height - 1;
 }
 
 
@@ -77,12 +80,13 @@ void 	ray(t_e *e)
 
 }
 
-void ft_map(t_e *e)
+void 	ft_map(t_e *e)
 {
 	e->mlx = mlx_init();
 	e->win = mlx_new_window(e->mlx, e->width, e->height, "wolf3d");
 	//draw_map(e);
 	ray(e);
+	mlx_hook(e->win, 17, 0, exit_cl, NULL);
 	mlx_key_hook(e->win, key_pressed, e);
 	mlx_loop(e->mlx);
 }

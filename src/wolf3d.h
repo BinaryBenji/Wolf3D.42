@@ -22,7 +22,6 @@ typedef struct 		s_e
 
 	int				width;
 	int 			height;
-	// int				color;
 	double 			posX;
 	double 			posY;
   	double 			dirX;
@@ -47,8 +46,17 @@ typedef struct 		s_e
     int 			side;
     int 			mapX;
     int				mapY;
+    int 			perpWallDist;
+    int				lineHeight;
+    int 			drawStart;
+    int 			drawEnd;
+    double 			oldDirX;
+    double 			oldPlaneX;
+    int 			rotSpeed;
+    int 			moveSpeed;
 
-
+    int x;
+    int 			color;
       char  **tab;
       int   east;
       int   ok;
@@ -63,6 +71,8 @@ void ft_map(t_e *e);
 int   exiterror(void);
 int   error(void);
 void	store_tab(int fd, t_e *e);
+int	key_pressed(int keycode, t_e *e);
+int 	exit_cl(void);
 
 
 #endif
