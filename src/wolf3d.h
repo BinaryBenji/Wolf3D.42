@@ -55,6 +55,7 @@ typedef struct 		s_e
     int 			rotSpeed;
     int 			moveSpeed;
 
+    int 			help;
     int x;
     int 			color;
       char  **tab;
@@ -73,6 +74,9 @@ int   error(void);
 void	store_tab(int fd, t_e *e);
 int	key_pressed(int keycode, t_e *e);
 int 	exit_cl(void);
-
+int 	false_map(int fd, t_e *e);
+void 	dda_2(t_e *e);
+void 	dda_1(t_e *e);
+void 	help(t_e *e);
 
 #endif

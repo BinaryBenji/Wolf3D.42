@@ -1,10 +1,14 @@
 #include "wolf3d.h"
 
+/*
+**	Key handler : 
+** 	For AZERTY : UP = 122, DOWN = 115, LEFT = 113, RIGHT, 100
+** 	For QWERTY : 
+*/
 
-
-int	key_up(int keycode, t_e *e) // 
+int		key_up(int keycode, t_e *e) // 
 {
-	if (keycode == 122)
+		if (keycode == 122)
 	{
 		if (e->tab[(int)(e->posX + e->dirX * e->moveSpeed)]
 			[(int)(e->posY)] == 0)
@@ -71,6 +75,7 @@ int	key_pressed(int keycode, t_e *e)
 	key_down(keycode, e);
 	key_left(keycode, e);
 	key_right(keycode, e);
-
+	if (keycode == 102) // F
+		help(e);
 	return (0);
 }
