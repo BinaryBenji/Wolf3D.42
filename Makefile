@@ -33,7 +33,8 @@ SRC_NAME = 			main.c \
 					parser.c \
 					draw.c \
 					events.c \
-					check.c
+					check.c \
+					dda.c
 
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 

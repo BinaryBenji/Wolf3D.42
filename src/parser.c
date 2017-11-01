@@ -31,7 +31,7 @@ void	store_tab(int fd, t_e *e)
 		e->i++;
 	}
 	int g = 0;
-	while(g < e->south) 
+	while (g < e->south) 
 	{
 		printf("line : %s\n", e->tab[g]);
 		g++;

@@ -55,6 +55,8 @@ typedef struct 		s_e
     int 			rotSpeed;
     int 			moveSpeed;
 
+    char 			rem;
+
     int 			help;
     int x;
     int 			color;
@@ -67,16 +69,20 @@ typedef struct 		s_e
       int	i;
 }			   		t_e;
 
-int   usage(void);
-void ft_map(t_e *e);
-int   exiterror(void);
-int   error(void);
+int   	usage(void);
+void 	ft_map(t_e *e);
+int  	exiterror(void);
+int   	error(void);
 void	store_tab(int fd, t_e *e);
-int	key_pressed(int keycode, t_e *e);
+int		key_pressed(int keycode, t_e *e);
 int 	exit_cl(void);
 int 	false_map(int fd, t_e *e);
 void 	dda_2(t_e *e);
 void 	dda_1(t_e *e);
 void 	help(t_e *e);
+void 	wall(t_e *e);
+void 	inits(t_e *e);
+void 	calc(t_e *e);
+void 	draw_map(t_e *e);
 
 #endif

@@ -23,3 +23,17 @@ int 	usage(void)
 	ft_putstr_fd("usage: ./wolf3d [map] \n", 2);
 	return (-1);
 }
+
+/*
+**	Graphical help menu
+*/
+
+void 	help(t_e *e)
+{
+	if (e->help == 1)
+	{
+		mlx_string_put(e->mlx, e->win, 10, 20, 0xEEEEEE, "Keys :");
+		mlx_string_put(e->mlx, e->win, 10, 40, 0xEEEEEE, "WASD to move");
+		mlx_string_put(e->mlx, e->win, 10, 60, 0xEEEEEE, "H to hide help");	
+	}
+}

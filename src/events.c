@@ -75,7 +75,16 @@ int	key_pressed(int keycode, t_e *e)
 	key_down(keycode, e);
 	key_left(keycode, e);
 	key_right(keycode, e);
-	if (keycode == 102) // F
+	if (keycode == 104 && e->help == 1)
+	{
 		help(e);
+		e->help = 0;
+	} 
+	else if (keycode == 104 && e->help == 0) // H
+	{
+		mlx_clear_window(e->mlx, e->win);
+		// relance draw
+		e->help = 1;
+	}
 	return (0);
 }

@@ -28,6 +28,20 @@ void	init_map(t_e *e)
 	e->help = 1;
 }
 
+/*
+**	Loop for the map draw
+*/
+
+void 	ft_map(t_e *e)
+{
+	e->mlx = mlx_init();
+	e->win = mlx_new_window(e->mlx, e->width, e->height, "wolf3d");
+	draw_map(e);
+	mlx_hook(e->win, 17, 0, exit_cl, NULL);
+	mlx_key_hook(e->win, key_pressed, e);
+	mlx_loop(e->mlx);
+}
+
 
 /*
 **	Main
