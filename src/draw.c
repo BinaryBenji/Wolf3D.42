@@ -36,14 +36,23 @@ void 	calc(t_e *e)
 
 void 	pix_to_img(t_e *e)
 {
-	ft_memmove(e->imgstr + 4 * e->width * e->drawStart + 
-		(e->drawStart - 1) * 4, &e->color, sizeof(int));
+
+	void *lol;
+
+	lol = &e->color;
+	//if (e->mapX < e->width && e->mapY < e->height)
+		ft_memmove(e->imgstr + 4 * e->width * e->mapY + 
+			e->mapX * 4, &lol, sizeof(int));
 }
 
 
 void 	wall(t_e *e)
 {
-	while (e->drawStart - 1 <= e->drawEnd)
+	ft_putnbr(e->drawStart);
+	ft_putchar('-');
+	ft_putnbr(e->drawEnd);
+	ft_putchar('\n');
+	while (e->drawStart <= e->drawEnd)
 	{
 		pix_to_img(e);
 		e->drawStart++;

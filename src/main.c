@@ -14,11 +14,11 @@ void	init_map(t_e *e)
 	e->height = 400;
 	e->x = 0;
 
-	e->color = 0xddFF00;
+	e->color = 0x8fbc8f;
 	e->rotSpeed = 0.05;
 	e->moveSpeed = 0.05;
-	e->posX = 22;
-	e->posY = 12;
+	e->posX = 2;
+	e->posY = 1;
 	e->dirX = -1;
 	e->dirY = 0;
 	e->planeX = 0;

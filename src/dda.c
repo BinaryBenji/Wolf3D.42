@@ -26,7 +26,7 @@ void 	dda_1(t_e *e)
 	else
 	{
 		e->stepX = -1;
-		e->sideDistX = (e->mapX + 1.0 - e->rayPosX) * e->deltaDistX;
+		e->sideDistX = (e->mapX + 1 - e->rayPosX) * e->deltaDistX;
 	}
 	if (e->rayDirY < 0)
 	{
@@ -36,7 +36,7 @@ void 	dda_1(t_e *e)
 	else
 	{
 		e->stepY = 1;
-		e->sideDistY = (e->mapY + 1.0 - e->rayPosY) * e->deltaDistY;
+		e->sideDistY = (e->mapY + 1 - e->rayPosY) * e->deltaDistY;
 	}
 }
 
@@ -56,13 +56,7 @@ void 	dda_2(t_e *e)
 			e->mapY += e->stepY;
 			e->side = 1;
 		}
-		// if ((e->tab[e->mapX][e->mapY] - '0') < 0)
-		// 	e->hit = 1;
-		printf("mapx : %d", e->mapY);
-		printf("mapy : %d", e->mapY);
-
-		// int klikli = e->tab[e->mapX][e->mapY] - '0';
-		// ft_putnbr(klikli);
-		//e->hit = 1;
+		if (e->tab[e->mapX][e->mapY] > 0)
+			e->hit = 1;
 	}
 }
