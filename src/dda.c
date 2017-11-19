@@ -3,7 +3,7 @@
 
 void 	inits(t_e *e)
 {
-	e->cameraX = 2;
+	e->cameraX = 2 * e->x / (double)e->width - 1;
 	e->rayPosX = e->posX;
 	e->rayPosY = e->posY;
 	e->rayDirX = e->dirX + e->planeX * e->cameraX;
@@ -56,7 +56,28 @@ void 	dda_2(t_e *e)
 			e->mapY += e->stepY;
 			e->side = 1;
 		}
-		if (e->tab[e->mapX][e->mapY] > 0)
+		printf("Mapx : %d\n", e->mapX);
+		printf("Mapy : %d\n", e->mapY);
+		if (e->tab[e->mapY][e->mapX] == '1')
 			e->hit = 1;
 	}
+}
+
+
+/*
+**	Moves the camera according to the distance between 
+**		the wall and the camera.
+**	Blocks the camera in front of the wall if too close.
+*/
+
+void 	wall(t_e *e)
+{
+	if (e->side == 0)
+		e->cam_WD = fabs(e->mapX - e->cameraX + 
+			((1 - e->stepX) / 2) / e->cameraX);
+	else
+		e->cam_WD = fabs(e->mapX - 0.6 + 
+			((1 - e->stepY) / 2) / 0.6);
+	if (e->cam_WD <= 0.05)
+		e->cam_WD = 0.05;
 }

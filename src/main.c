@@ -1,6 +1,42 @@
 #include "wolf3d.h"
 
 /*
+**	Gives hero position according to the 'X' position
+**	of the given map.
+**	Also gives Speeds of the rotations & movement.
+*/
+
+int 	hero_init(t_e *e)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (e->tab[j])
+	{
+		while (e->tab[j][i])
+		{
+			if (e->tab[j][i] == 'X')
+			{
+				e->posX = i;
+				e->posY = j;
+				e->dirX = -1;
+				e->dirY = 0;
+				e->rotSpeed = 0.05;
+				e->moveSpeed = 0.05;
+				return (0);
+			}
+			i++;
+		}
+		j++;
+		i = 0;
+	}
+	return (-1);
+}
+
+
+/*
 **	Initialize basic parameters
 */
 
@@ -14,37 +50,33 @@ void	init_map(t_e *e)
 	e->height = 400;
 	e->x = 0;
 
-	e->color = 0x8fbc8f;
-	e->rotSpeed = 0.05;
-	e->moveSpeed = 0.05;
+	e->color = 0x512f0d;
 	e->posX = 2;
 	e->posY = 1;
-	e->dirX = -1;
-	e->dirY = 0;
 	e->planeX = 0;
 	e->planeY = 0.66;
 	e->time = 0;
 	e->oldTime = 0;
 	e->help = 1;
-}
 
-/*
-**	Loop for the map draw
-*/
-
-void 	ft_map(t_e *e)
-{
 	e->mlx = mlx_init();
 	e->win = mlx_new_window(e->mlx, e->width, e->height, "wolf3d");
-	draw_map(e);
-	mlx_hook(e->win, 17, 0, exit_cl, NULL);
-	mlx_key_hook(e->win, key_pressed, e);
-	mlx_loop(e->mlx);
+
+	
+	// e->posX = 1.5;
+	// e->posY = 1.5;
+	// e->dirX = 1;
+	// e->dirY = 0;
+	// e->planeX = 0;
+	// e->planeY = -0.8;
+	// e->moveSpeed = 1;
+	// e->rotSpeed = 1;
 }
 
 
 /*
-**	Main
+**	Main : checks validity of the map.
+**	Then go to map
 */
 
 int 	main(int argc, char **argv)
@@ -64,6 +96,8 @@ int 	main(int argc, char **argv)
 	if (!(fd = open(argv[1], O_RDONLY)))
 		return (error());
 	store_tab(fd, &e);
-	ft_map(&e);
+	if (hero_init(&e) == -1)
+		return (error());
+	draw_map(&e);
 	return (0);
 }

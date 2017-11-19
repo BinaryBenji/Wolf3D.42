@@ -1,9 +1,22 @@
 #include "wolf3d.h"
 
+void 	fill_img(t_e *e)
+{
+	e->l = 0;
+
+	while (e->l < e->height)
+	{
+		pix_to_img(e);
+		e->l++;
+	}
+}
+
+
 void 	draw_map(t_e *e)
 {
 	e->imgptr = mlx_new_image(e->mlx, e->width, e->height);
 	e->imgstr = mlx_get_data_addr(e->imgptr, &(e->bpp), &(e->s_l), &(e->endian));
+	e->x = 0;
 	while (e->x < e->width)
 	{
 		inits(e);
@@ -11,10 +24,19 @@ void 	draw_map(t_e *e)
 		dda_2(e);
 		calc(e);
 		wall(e);
+		e->draw_height = fabs(e->width / e->cam_WD);
+		if ((e->drawStart = -(e->draw_height) / 2 + e->width / 2) < 0)
+			e->drawStart = 0;
+		if ((e->drawEnd = e->draw_height / 2 + e->width / 2) >= e->width)
+			e->drawEnd = e->width - 1;
+		fill_img(e);
+
 		e->x++;
 	}
 	mlx_put_image_to_window(e->mlx, e->win, e->imgptr, 0, 0);
-	//mlx_destroy_image(e->mlx, e->imgstr);
+	mlx_hook(e->win, 17, 0, exit_cl, NULL);
+	mlx_key_hook(e->win, key_pressed, e);
+	mlx_loop(e->mlx);
 }
 
 void 	calc(t_e *e)
@@ -36,28 +58,21 @@ void 	calc(t_e *e)
 
 void 	pix_to_img(t_e *e)
 {
+	int i;
+	int p;
 
-	void *lol;
-
-	lol = &e->color;
-	//if (e->mapX < e->width && e->mapY < e->height)
-		ft_memmove(e->imgstr + 4 * e->width * e->mapY + 
-			e->mapX * 4, &lol, sizeof(int));
-}
-
-
-void 	wall(t_e *e)
-{
-	ft_putnbr(e->drawStart);
-	ft_putchar('-');
-	ft_putnbr(e->drawEnd);
-	ft_putchar('\n');
-	while (e->drawStart <= e->drawEnd)
+	i = 0;
+	p = e->x * (e->bpp / 8) + e->l * (e->s_l);
+	while (i < (e->bpp / 8))
 	{
-		pix_to_img(e);
-		e->drawStart++;
+		e->imgstr[p + i] = e->color;
+		e->color >>=8;
+		i++;
 	}
 }
+
+
+
 
 
 

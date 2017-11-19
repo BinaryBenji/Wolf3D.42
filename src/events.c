@@ -6,9 +6,9 @@
 ** 	For QWERTY : 
 */
 
-int		key_up(int keycode, t_e *e) // 
+int		key_up(int keycode, t_e *e) 
 {
-		if (keycode == 122)
+	if (keycode == 122)
 	{
 		if (e->tab[(int)(e->posX + e->dirX * e->moveSpeed)]
 			[(int)(e->posY)] == 0)
@@ -20,7 +20,7 @@ int		key_up(int keycode, t_e *e) //
 	return (0);
 }
 
-int	key_down(int keycode, t_e *e)
+int		key_down(int keycode, t_e *e)
 {
 	if (keycode == 115)
 	{
@@ -34,7 +34,7 @@ int	key_down(int keycode, t_e *e)
 	return (0);
 }
 
-int	key_left(int keycode, t_e *e)
+int		key_left(int keycode, t_e *e) // Rotation
 {
 	if (keycode == 113)
 	{
@@ -49,7 +49,7 @@ int	key_left(int keycode, t_e *e)
 	return (0);
 }
 
-int	key_right(int keycode, t_e *e)
+int		key_right(int keycode, t_e *e) // Rotation
 {
 	if (keycode == 100)
 	{
@@ -64,8 +64,7 @@ int	key_right(int keycode, t_e *e)
 }
 
 
-
-int	key_pressed(int keycode, t_e *e)
+int		key_pressed(int keycode, t_e *e)
 {
 	if (keycode == 65307) // Echap
 		exit(0);

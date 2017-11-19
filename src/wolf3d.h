@@ -54,7 +54,9 @@ typedef struct 		s_e
     double 			oldPlaneX;
     int 			rotSpeed;
     int 			moveSpeed;
-
+    double    draw_height;
+    double    cam_WD;
+    int   l;
     char 			rem;
 
     int 			help;
@@ -84,5 +86,7 @@ void 	wall(t_e *e);
 void 	inits(t_e *e);
 void 	calc(t_e *e);
 void 	draw_map(t_e *e);
+int   hero_init(t_e *e);
+void  pix_to_img(t_e *e);
 
 #endif
