@@ -11,10 +11,10 @@ int		key_up(int keycode, t_e *e)
 	if (keycode == 122)
 	{
 		if (e->tab[(int)(e->posX + e->dirX * e->moveSpeed)]
-			[(int)(e->posY)] == 0)
+			[(int)(e->posY)] != '1')
 				e->posX += e->dirX * e->moveSpeed;
 		if (e->tab[(int)(e->posX)]
-			[(int)(e->posY + e->dirY * e->moveSpeed)] == 0)
+			[(int)(e->posY + e->dirY * e->moveSpeed)] != '1')
 				e->posY += e->dirY * e->moveSpeed;
 	}
 	return (0);
@@ -25,10 +25,10 @@ int		key_down(int keycode, t_e *e)
 	if (keycode == 115)
 	{
 		if (e->tab[(int)(e->posX - e->dirX * e->moveSpeed)]
-			[(int)(e->posY)] == 0)
+			[(int)(e->posY)] != '1')
 				e->posX -= e->dirX * e->moveSpeed;
 		if (e->tab[(int)(e->posX)]
-			[(int)(e->posY - e->dirY * e->moveSpeed)] == 0)
+			[(int)(e->posY - e->dirY * e->moveSpeed)] != '1')
 				e->posY -= e->dirY * e->moveSpeed;
 	}
 	return (0);
@@ -44,7 +44,6 @@ int		key_left(int keycode, t_e *e) // Rotation
 		e->oldPlaneX = e->planeX;
 		e->planeX = e->planeX * cos(-(e->rotSpeed)) - e->planeY * sin(-(e->rotSpeed));
 		e->planeY = e->oldPlaneX * sin(-(e->rotSpeed)) + e->planeY * cos(-(e->rotSpeed));
-
 	}
 	return (0);
 }

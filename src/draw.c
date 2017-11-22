@@ -1,5 +1,6 @@
 #include "wolf3d.h"
 
+
 void 	fill_img(t_e *e)
 {
 	e->l = 0;
@@ -24,11 +25,11 @@ void 	draw_map(t_e *e)
 		dda_2(e);
 		calc(e);
 		wall(e);
-		e->draw_height = fabs(e->width / e->cam_WD);
-		if ((e->drawStart = -(e->draw_height) / 2 + e->width / 2) < 0)
+		e->draw_height = fabs(e->height / e->cam_WD);
+		if ((e->drawStart = -(e->draw_height) / e->draw_height + e->height) < 0)
 			e->drawStart = 0;
-		if ((e->drawEnd = e->draw_height / 2 + e->width / 2) >= e->width)
-			e->drawEnd = e->width - 1;
+		if ((e->drawEnd = e->draw_height / 2 + e->height / 2) >= e->height)
+			e->drawEnd = e->height - 1;
 		fill_img(e);
 
 		e->x++;
@@ -38,6 +39,7 @@ void 	draw_map(t_e *e)
 	mlx_key_hook(e->win, key_pressed, e);
 	mlx_loop(e->mlx);
 }
+
 
 void 	calc(t_e *e)
 {
@@ -55,6 +57,7 @@ void 	calc(t_e *e)
 	if (e->side == 1)
 		e->color = e->color / 2;
 }
+
 
 void 	pix_to_img(t_e *e)
 {

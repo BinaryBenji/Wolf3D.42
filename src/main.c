@@ -13,9 +13,9 @@ int 	hero_init(t_e *e)
 
 	i = 0;
 	j = 0;
-	while (e->tab[j])
+	while (j <= e->south)
 	{
-		while (e->tab[j][i])
+		while (i <= e->east)
 		{
 			if (e->tab[j][i] == 'X')
 			{
@@ -24,7 +24,8 @@ int 	hero_init(t_e *e)
 				e->dirX = -1;
 				e->dirY = 0;
 				e->rotSpeed = 0.05;
-				e->moveSpeed = 0.05;
+				e->moveSpeed = 0.2;
+				printf("hero is sitting at : %lf - %lf", e->posX, e->posY);
 				return (0);
 			}
 			i++;
@@ -50,7 +51,7 @@ void	init_map(t_e *e)
 	e->height = 400;
 	e->x = 0;
 
-	e->color = 0x512f0d;
+	e->color = 0x512F0D;
 	e->posX = 2;
 	e->posY = 1;
 	e->planeX = 0;
@@ -59,10 +60,6 @@ void	init_map(t_e *e)
 	e->oldTime = 0;
 	e->help = 1;
 
-	e->mlx = mlx_init();
-	e->win = mlx_new_window(e->mlx, e->width, e->height, "wolf3d");
-
-	
 	// e->posX = 1.5;
 	// e->posY = 1.5;
 	// e->dirX = 1;
@@ -98,6 +95,8 @@ int 	main(int argc, char **argv)
 	store_tab(fd, &e);
 	if (hero_init(&e) == -1)
 		return (error());
+	e.mlx = mlx_init();
+	e.win = mlx_new_window(e.mlx, e.width, e.height, "wolf3d");
 	draw_map(&e);
 	return (0);
 }

@@ -40,6 +40,7 @@ void 	dda_1(t_e *e)
 	}
 }
 
+
 void 	dda_2(t_e *e)
 {
 	while (e->hit == 0)
@@ -56,8 +57,8 @@ void 	dda_2(t_e *e)
 			e->mapY += e->stepY;
 			e->side = 1;
 		}
-		printf("Mapx : %d\n", e->mapX);
-		printf("Mapy : %d\n", e->mapY);
+		// printf("Mapx : %d\n", e->mapX);
+		// printf("Mapy : %d\n", e->mapY);
 		if (e->tab[e->mapY][e->mapX] == '1')
 			e->hit = 1;
 	}

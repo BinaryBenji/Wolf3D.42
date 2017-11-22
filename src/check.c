@@ -28,7 +28,7 @@ int 	is_line_ok(char *line, t_e *e)
 
 /*
 **	Checks if every line have same length : only quadrangle are allowed.
-**	A map with only one line is not allowed.
+**	A map with x < 2 or y < 2 are forbidden
 **	Then check content of each line.
 */
 
@@ -51,10 +51,11 @@ int 	check(int fd, t_e *e)
 		}
 		e->south++;
 	}
-	e->east = e->previous;
+	e->east = e->previous - 1;
+	e->south--;
 	if (e->xchecker != 1)
 		return (-1);
-	if (e->south <= 1)
+	if (e->south < 2 || e->east < 2)
 		return (-1);
 	return (1);
 }

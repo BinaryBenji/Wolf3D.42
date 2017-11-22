@@ -71,6 +71,7 @@ typedef struct 		s_e
       int	i;
 }			   		t_e;
 
+
 int   	usage(void);
 void 	ft_map(t_e *e);
 int  	exiterror(void);
