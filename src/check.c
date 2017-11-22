@@ -70,3 +70,4 @@ int 	false_map(int fd, t_e *e)
 		return (-1);
 	return (1);
 }
+

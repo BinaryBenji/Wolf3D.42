@@ -9,6 +9,9 @@
 #include <fcntl.h>
 #include "mlx.h"
 
+# define BROWN 0xAF1822
+# define GREEN 0x64AD6A
+# define BLUE 0x3BBDED
 
 typedef struct 		s_e
 {
@@ -88,6 +91,7 @@ void 	inits(t_e *e);
 void 	calc(t_e *e);
 void 	draw_map(t_e *e);
 int   hero_init(t_e *e);
-void  pix_to_img(t_e *e);
+void  pix_to_img(t_e *e, int color);
+int   border_check(t_e *e);
 
 #endif

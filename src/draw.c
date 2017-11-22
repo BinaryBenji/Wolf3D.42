@@ -4,10 +4,14 @@
 void 	fill_img(t_e *e)
 {
 	e->l = 0;
-
 	while (e->l < e->height)
 	{
-		pix_to_img(e);
+		if (e->l < e->drawStart)
+			pix_to_img(e, BROWN);
+		else if (e->l > e->drawEnd)
+			pix_to_img(e, BLUE);
+		else
+			pix_to_img(e, GREEN);
 		e->l++;
 	}
 }
@@ -59,17 +63,18 @@ void 	calc(t_e *e)
 }
 
 
-void 	pix_to_img(t_e *e)
+void 	pix_to_img(t_e *e, int color)
 {
 	int i;
-	int p;
+	unsigned int p;
 
 	i = 0;
 	p = e->x * (e->bpp / 8) + e->l * (e->s_l);
+	// printf("p : %d\n", p);
 	while (i < (e->bpp / 8))
 	{
-		e->imgstr[p + i] = e->color;
-		e->color >>=8;
+		e->imgstr[p + i] = color;
+		color >>= 8;
 		i++;
 	}
 }
