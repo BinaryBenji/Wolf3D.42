@@ -34,7 +34,7 @@ int		key_down(int keycode, t_e *e)
 	return (0);
 }
 
-int		key_left(int keycode, t_e *e) // Rotation
+int		key_left(int keycode, t_e *e) // Left Rotation
 {
 	if (keycode == 113)
 	{
@@ -48,7 +48,7 @@ int		key_left(int keycode, t_e *e) // Rotation
 	return (0);
 }
 
-int		key_right(int keycode, t_e *e) // Rotation
+int		key_right(int keycode, t_e *e) // Right Rotation
 {
 	if (keycode == 100)
 	{
@@ -68,21 +68,21 @@ int		key_pressed(int keycode, t_e *e)
 	if (keycode == 65307) // Echap
 		exit(0);
 	printf("Keycode : %d\n",keycode);
-	e->ok = 2;
+	// e->ok = 2;
 	key_up(keycode, e);
 	key_down(keycode, e);
 	key_left(keycode, e);
 	key_right(keycode, e);
-	if (keycode == 104 && e->help == 1)
-	{
-		help(e);
-		e->help = 0;
-	} 
-	else if (keycode == 104 && e->help == 0) // H
-	{
-		mlx_clear_window(e->mlx, e->win);
-		// relance draw
-		e->help = 1;
-	}
+	// if (keycode == 104 && e->help == 1)
+	// {
+	// 	help(e);
+	// 	e->help = 0;
+	// } 
+	// else if (keycode == 104 && e->help == 0) // H
+	// {
+	// 	mlx_clear_window(e->mlx, e->win);
+	// 	draw_map(e);
+	// 	e->help = 1;
+	// }
 	return (0);
 }

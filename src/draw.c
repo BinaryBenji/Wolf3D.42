@@ -1,17 +1,26 @@
 #include "wolf3d.h"
 
 
+/*
+**	Fill pixels to the img : 
+**	For each pixels on the vertical 
+**	We give attribute a color
+*/
+
 void 	fill_img(t_e *e)
 {
 	e->l = 0;
 	while (e->l < e->height)
 	{
 		if (e->l < e->drawStart)
-			pix_to_img(e, BROWN);
+			pix_to_img(e, RED);
 		else if (e->l > e->drawEnd)
 			pix_to_img(e, BLUE);
 		else
-			pix_to_img(e, GREEN);
+		{
+			if (e->hit == 1)
+				pix_to_img(e, GREEN);
+		}
 		e->l++;
 	}
 }
@@ -19,9 +28,8 @@ void 	fill_img(t_e *e)
 
 void 	draw_map(t_e *e)
 {
-	e->imgptr = mlx_new_image(e->mlx, e->width, e->height);
-	e->imgstr = mlx_get_data_addr(e->imgptr, &(e->bpp), &(e->s_l), &(e->endian));
 	e->x = 0;
+	// e->x = 0;
 	while (e->x < e->width)
 	{
 		inits(e);
@@ -35,13 +43,13 @@ void 	draw_map(t_e *e)
 		if ((e->drawEnd = e->draw_height / 2 + e->height / 2) >= e->height)
 			e->drawEnd = e->height - 1;
 		fill_img(e);
-
 		e->x++;
 	}
 	mlx_put_image_to_window(e->mlx, e->win, e->imgptr, 0, 0);
-	mlx_hook(e->win, 17, 0, exit_cl, NULL);
 	mlx_key_hook(e->win, key_pressed, e);
+	mlx_hook(e->win, 17, 0, exit_cl, NULL);
 	mlx_loop(e->mlx);
+	mlx_destroy_window(e->mlx, e->win);
 }
 
 
@@ -70,7 +78,7 @@ void 	pix_to_img(t_e *e, int color)
 
 	i = 0;
 	p = e->x * (e->bpp / 8) + e->l * (e->s_l);
-	// printf("p : %d\n", p);
+	
 	while (i < (e->bpp / 8))
 	{
 		e->imgstr[p + i] = color;

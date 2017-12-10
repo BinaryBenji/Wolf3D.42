@@ -9,7 +9,7 @@
 #include <fcntl.h>
 #include "mlx.h"
 
-# define BROWN 0xAF1822
+# define RED 0xAF1822
 # define GREEN 0x64AD6A
 # define BLUE 0x3BBDED
 
@@ -72,6 +72,8 @@ typedef struct 		s_e
       int 	south;
       int	xchecker;
       int	i;
+
+      int lol;
 }			   		t_e;
 
 

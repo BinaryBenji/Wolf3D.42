@@ -11,6 +11,7 @@ void 	inits(t_e *e)
 	e->mapX = (int)e->rayPosX;
 	e->mapY = (int)e->rayPosY;
 	e->hit = 0;
+	e->l = 0;
 }
 
 
@@ -25,7 +26,7 @@ void 	dda_1(t_e *e)
 	}
 	else
 	{
-		e->stepX = -1;
+		e->stepX = 1;
 		e->sideDistX = (e->mapX + 1 - e->rayPosX) * e->deltaDistX;
 	}
 	if (e->rayDirY < 0)

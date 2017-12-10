@@ -19,8 +19,8 @@ int 	hero_init(t_e *e)
 		{
 			if (e->tab[j][i] == 'X')
 			{
-				e->posX = i;
-				e->posY = j;
+				e->posX = j;
+				e->posY = i;
 				e->dirX = -1;
 				e->dirY = 0;
 				e->rotSpeed = 0.05;
@@ -97,6 +97,8 @@ int 	main(int argc, char **argv)
 		return (error());
 	e.mlx = mlx_init();
 	e.win = mlx_new_window(e.mlx, e.width, e.height, "wolf3d");
+	e.imgptr = mlx_new_image(e.mlx, e.width, e.height);
+	e.imgstr = mlx_get_data_addr(e.imgptr, &(e.bpp), &(e.s_l), &(e.endian));
 	draw_map(&e);
 	return (0);
 }
