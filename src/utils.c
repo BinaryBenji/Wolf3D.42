@@ -15,6 +15,7 @@ int 	exiterror(void)
 int 	exit_cl(void)
 {
 	exit(0);
+	return (0);
 }
 
 
@@ -30,10 +31,7 @@ int 	usage(void)
 
 void 	help(t_e *e)
 {
-	if (e->help == 1)
-	{
-		mlx_string_put(e->mlx, e->win, 10, 20, 0xEEEEEE, "Keys :");
-		mlx_string_put(e->mlx, e->win, 10, 40, 0xEEEEEE, "WASD to move");
-		mlx_string_put(e->mlx, e->win, 10, 60, 0xEEEEEE, "H to hide help");	
-	}
+	mlx_string_put(e->mlx, e->win, 1100, 20, 0x0a122a, "Keys :");
+	mlx_string_put(e->mlx, e->win, 1100, 40, 0x0a122a, "WASD to move");
+	mlx_string_put(e->mlx, e->win, 1100, 60, 0x0a122a, "SHIFT to sprint");	
 }

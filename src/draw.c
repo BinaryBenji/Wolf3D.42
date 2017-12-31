@@ -3,73 +3,171 @@
 
 /*
 **	Fill pixels to the img : 
-**	For each pixels on the vertical 
-**	We give attribute a color
+**	For each pixels on the vertical (height)
+**	We give attribute a color to a pixel.
 */
 
-void 	fill_img(t_e *e)
+void 	fill_img_vertical(t_e *e) // static?
 {
+	// e->l = 0;
+	// while (e->l < e->height)
+	// {
+	// 	if (e->l < e->drawStart)
+	// 		pix_to_img(e, BLUE);
+	// 	else if (e->l > e->drawEnd)
+	// 		pix_to_img(e, e->color);
+	// 	else
+	// 	{
+	// 		if (e->hit == 1)
+	// 			pix_to_img(e, 0x5d675b);
+	// 	}
+	// 	e->l++;
+	// }
+	// printf("drawEnd : %d\n", e->drawEnd);
+	// printf("drawStart : %d", e->drawStart);
 	e->l = 0;
 	while (e->l < e->height)
 	{
 		if (e->l < e->drawStart)
-			pix_to_img(e, RED);
-		else if (e->l > e->drawEnd)
-			pix_to_img(e, BLUE);
-		else
+			pix_to_img(e, 0xd4cbe5);
+		else if (e->l >= e->drawStart && e->l <= e->drawEnd)
+			pix_to_img(e, e->color);
+		else // changes
 		{
 			if (e->hit == 1)
-				pix_to_img(e, GREEN);
+				pix_to_img(e, 0x317b22);
+				//pix_to_img(e, 0xC00000A0);
+			
 		}
 		e->l++;
 	}
 }
 
 
-void 	draw_map(t_e *e)
+/*
+**	Destroys the previous image and create another one.
+*/
+
+void 	renew_image(t_e *e)
+{
+	mlx_destroy_image(e->mlx, e->imgptr);
+	e->imgptr = mlx_new_image(e->mlx, e->width, e->height);
+}
+
+
+/*
+** "Wheel" represents all the hooks managing of the game
+**	And also the execution of the display.
+*/
+
+int 	wheel(t_e *e)
+{
+	renew_image(e);
+
+	if (e->tap_up == 1)
+		key_up(e);
+	if (e->tap_down == 1)
+		key_down(e);
+	if (e->tap_left == 1)
+		key_left(e);
+	if (e->tap_right == 1)
+		key_right(e);
+	if (e->tap_sprint == 1)
+		key_sprint(e);
+	else
+	{
+		e->moveSpeed = 0.03;
+		e->rotSpeed = 0.03;
+	}
+	//key_pressed(t_e *e);
+	draw_map(e);
+
+	return (0);
+}
+
+
+/*
+**	Gives to a wall a color, according to the orientation.	
+*/
+
+void 	color_wall(t_e *e)
+{
+	if (e->side == 0)
+	{
+		if (e->stepX < 0) // north
+			e->color = 0x78bc61;
+		else 				// south
+			e->color = 0xdce2c8;
+	}
+	else
+	{
+		if (e->stepY > 0) // east
+			e->color = 0x4f6d7a;
+		else //west
+			e->color = 0xe9806e;
+	}
+}
+
+
+/*
+**	Executes DDA algorithm, then builds the image
+** 	Then finally put it into the screen.
+*/
+
+
+int 	draw_map(t_e *e)
 {
 	e->x = 0;
-	// e->x = 0;
 	while (e->x < e->width)
 	{
 		inits(e);
 		dda_1(e);
 		dda_2(e);
-		calc(e);
+		//calc(e);
 		wall(e);
-		e->draw_height = fabs(e->height / e->cam_WD);
-		if ((e->drawStart = -(e->draw_height) / e->draw_height + e->height) < 0)
-			e->drawStart = 0;
-		if ((e->drawEnd = e->draw_height / 2 + e->height / 2) >= e->height)
-			e->drawEnd = e->height - 1;
-		fill_img(e);
+		color_wall(e);
+		fill_img_vertical(e);
+		help(e);
 		e->x++;
 	}
+
+	// to try 
+
+	//mlx_put_image_to_window(e->mlx, e->win, e->imgptr_grass, 0, 0);
 	mlx_put_image_to_window(e->mlx, e->win, e->imgptr, 0, 0);
-	mlx_key_hook(e->win, key_pressed, e);
-	mlx_hook(e->win, 17, 0, exit_cl, NULL);
-	mlx_loop(e->mlx);
-	mlx_destroy_window(e->mlx, e->win);
+
+
+
+	// mlx_key_hook(e->win, key_pressed, e);
+	// mlx_hook(e->win, 17, 0, exit_cl, NULL);
+	// mlx_loop(e->mlx);
+	//mlx_destroy_window(e->mlx, e->win);
+	return (0);
 }
 
 
-void 	calc(t_e *e)
-{
-	if (e->side == 0)
-		e->perpWallDist = (e->mapX - e->rayPosX + (1 + e->stepX) / 2) / e->rayDirX;
-	else
-		e->perpWallDist = (e->mapY - e->rayPosY + (1 + e->stepY) / 2) / e->rayDirY;
-	e->lineHeight = (int)(e->height / e->perpWallDist);
-	e->drawStart = -(e->lineHeight) / 2 + e->height / 2;
-	if (e->drawStart < 0)
-		e->drawStart = 0;
-	e->drawEnd = e->lineHeight / 2 + e->height / 2;
-	if (e->drawEnd >= e->height)
-		e->drawEnd = e->height - 1;
-	if (e->side == 1)
-		e->color = e->color / 2;
-}
+// void 	calc(t_e *e)
+// {
+// 	if (e->side == 0)
+// 		e->perpWallDist = fabs((e->mapX - e->rayPosX + (1 - e->stepX) / 2) / e->rayDirX);
+// 	else
+// 		e->perpWallDist = fabs((e->mapY - e->rayPosY + (1 - e->stepY) / 2) / e->rayDirY);
 
+
+// 	e->lineHeight = abs((int)(e->height / e->perpWallDist));
+// 	e->drawStart = (-1 * (e->lineHeight)) / 2 + e->height / 2;
+// 	if (e->drawStart < 0)
+// 		e->drawStart = 0;
+// 	e->drawEnd = e->lineHeight / 2 + e->height / 2;
+// 	if (e->drawEnd >= e->height)
+// 		e->drawEnd = e->height - 1;
+// 	if (e->side == 1)
+// 		e->color = e->color / 2;
+// }
+
+/*
+**	Attributes a color to a given pixel.
+*/
 
 void 	pix_to_img(t_e *e, int color)
 {
@@ -85,6 +183,12 @@ void 	pix_to_img(t_e *e, int color)
 		color >>= 8;
 		i++;
 	}
+	// int	*tmp;
+
+	// if (e->l >= e->height || e->x >= e->width || e->x < 0 || e->l < 0)
+	// 	return ;
+	// tmp = (int *)&e->imgstr[(e->l * e->s_l) + (e->x * (e->bpp / 8))];
+	// *tmp = color;
 }
 
 

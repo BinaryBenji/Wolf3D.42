@@ -23,6 +23,10 @@ typedef struct 		s_e
 	int 			s_l;
 	int 			bpp;
 
+
+  void  *imgptr_grass;
+  char  *imgstr_grass;
+
 	int				width;
 	int 			height;
 	double 			posX;
@@ -31,8 +35,6 @@ typedef struct 		s_e
   	double 			dirY; 
   	double 			planeX;
   	double			planeY;
-  	double 			time;
-  	double 			oldTime;
 
   	double			cameraX;
   	double 			rayPosX;
@@ -55,13 +57,12 @@ typedef struct 		s_e
     int 			drawEnd;
     double 			oldDirX;
     double 			oldPlaneX;
-    int 			rotSpeed;
-    int 			moveSpeed;
+    double 			rotSpeed;
+    double 			moveSpeed;
     double    draw_height;
     double    cam_WD;
     int   l;
     char 			rem;
-
     int 			help;
     int x;
     int 			color;
@@ -73,7 +74,14 @@ typedef struct 		s_e
       int	xchecker;
       int	i;
 
+
       int lol;
+
+      int tap_sprint;
+      int tap_up;
+      int tap_down;
+      int tap_left;
+      int tap_right;
 }			   		t_e;
 
 
@@ -91,9 +99,21 @@ void 	help(t_e *e);
 void 	wall(t_e *e);
 void 	inits(t_e *e);
 void 	calc(t_e *e);
-void 	draw_map(t_e *e);
+int 	draw_map(t_e *e);
 int   hero_init(t_e *e);
 void  pix_to_img(t_e *e, int color);
 int   border_check(t_e *e);
+void  win_inits(t_e *e);
+void  renew_image(t_e *e);
+int   wheel(t_e *e);
+int   strike(int keycode, t_e *e);
+int   release(int keycode, t_e *e);
+
+void  key_up(t_e *e);
+void  key_down(t_e *e) ;
+void  key_left(t_e *e) ;
+void  key_right(t_e *e) ;
+void  key_sprint(t_e *e);
+
 
 #endif

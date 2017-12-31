@@ -11,7 +11,7 @@ void 	inits(t_e *e)
 	e->mapX = (int)e->rayPosX;
 	e->mapY = (int)e->rayPosY;
 	e->hit = 0;
-	e->l = 0;
+	e->side = 0; //changes
 }
 
 
@@ -22,22 +22,22 @@ void 	dda_1(t_e *e)
 	if (e->rayDirX < 0)
 	{
 		e->stepX = -1;
-		e->sideDistX = (e->rayPosX - e->mapX) * e->deltaDistX;
+		e->sideDistX = (e->rayPosX - (double)e->mapX) * e->deltaDistX; // add double each
 	}
 	else
 	{
 		e->stepX = 1;
-		e->sideDistX = (e->mapX + 1 - e->rayPosX) * e->deltaDistX;
+		e->sideDistX = ((double)e->mapX + 1.0 - e->rayPosX) * e->deltaDistX;
 	}
 	if (e->rayDirY < 0)
 	{
 		e->stepY = -1;
-		e->sideDistY = (e->rayPosY - e->mapY) * e->deltaDistY;
+		e->sideDistY = (e->rayPosY - (double)e->mapY) * e->deltaDistY;
 	}
 	else
 	{
 		e->stepY = 1;
-		e->sideDistY = (e->mapY + 1 - e->rayPosY) * e->deltaDistY;
+		e->sideDistY = ((double)e->mapY + 1.0 - e->rayPosY) * e->deltaDistY;
 	}
 }
 
@@ -58,10 +58,11 @@ void 	dda_2(t_e *e)
 			e->mapY += e->stepY;
 			e->side = 1;
 		}
-		// printf("Mapx : %d\n", e->mapX);
-		// printf("Mapy : %d\n", e->mapY);
-		if (e->tab[e->mapY][e->mapX] == '1')
+		
+		if ((e->tab[e->mapX][e->mapY] == 49))
+			//printf("Map : %c\n = true", e->tab[e->mapX][e->mapY]);
 			e->hit = 1;
+			// printf("Map : %c\n = false", e->tab[e->mapX][e->mapY]);
 	}
 }
 
@@ -74,12 +75,33 @@ void 	dda_2(t_e *e)
 
 void 	wall(t_e *e)
 {
+	// dist non redeclare
+
 	if (e->side == 0)
-		e->cam_WD = fabs(e->mapX - e->cameraX + 
-			((1 - e->stepX) / 2) / e->cameraX);
+		e->cam_WD = fabs((e->mapX - e->rayPosX + 
+			(1 - e->stepX) / 2) / e->rayDirX);
 	else
-		e->cam_WD = fabs(e->mapX - 0.6 + 
-			((1 - e->stepY) / 2) / 0.6);
+		e->cam_WD = fabs((e->mapY - e->rayPosY + 
+			(1 - e->stepY) / 2) / e->rayDirY);
 	if (e->cam_WD <= 0.05)
-		e->cam_WD = 0.05;
+		e->cam_WD = 0.05;   // ADD Or NOt
+
+
+	// MISS or not
+
+	// e->draw_height = abs(e->height / e->cam_WD);
+	// if ((e->drawStart = (-1 * (e->draw_height)) / e->draw_height + e->height) < 0)
+	// 	e->drawStart = 0;
+	// if ((e->drawEnd = e->draw_height / 2 + e->height / 2) >= e->height)
+	// 	e->drawEnd = e->height - 1;
+
+
+
+	e->lineHeight = abs((int)(e->height / e->cam_WD));
+	e->drawStart = (-1 * (e->lineHeight)) / 2 + e->height / 2;
+	if (e->drawStart < 0)
+		e->drawStart = 0;
+	e->drawEnd = e->lineHeight / 2 + e->height / 2;
+	if (e->drawEnd >= e->height)
+		e->drawEnd = e->height - 1;
 }
