@@ -78,15 +78,6 @@ void		key_right(t_e *e) // Right Rotation
 }
 
 
-/*
-**	SPRINT (SHIFT) key move
-*/
-
-void 	key_sprint(t_e *e)
-{
-	e->rotSpeed = 0.06;
-	e->moveSpeed = 0.06;
-}
 
 
 // int		key_pressed(int keycode, t_e *e)
@@ -114,46 +105,16 @@ void 	key_sprint(t_e *e)
 // 	return (0);
 // }
 
-
 /*
-**	Strike : when a key is pushed, status of the key is 1.
+**	Put the hero back to the 'X' spawn.
 */
 
-int 	strike(int keycode, t_e *e)
+void 	key_reinit(t_e *e)
 {
-	ft_putstr("hit");
-	if (keycode == 65307) // Echap
-		exit(0);
-	if (keycode == 122)
-		e->tap_up = 1;
-	if (keycode == 115)
-		e->tap_down = 1;
-	if (keycode == 113)
-		e->tap_left = 1;
-	if (keycode == 100)
-		e->tap_right = 1;
-	if (keycode == 65505) // shift
-		e->tap_sprint = 1;
-	//printf("keycode : %d", keycode);
-	return (0);
+	hero_init(e);
+	e->planeX = 0;
+	e->planeY = -0.9;
 }
 
-/*
-**	Release : when a key is released, status of the key is 0.
-*/
 
-int 	release(int keycode, t_e *e)
-{
-	//ft_putstr("release");
-	if (keycode == 122)
-		e->tap_up = 0;
-	if (keycode == 115)
-		e->tap_down = 0;
-	if (keycode == 113)
-		e->tap_left = 0;
-	if (keycode == 100)
-		e->tap_right = 0;
-	if (keycode == 65505) // shift
-		e->tap_sprint = 0;
-	return (0);
-}
+

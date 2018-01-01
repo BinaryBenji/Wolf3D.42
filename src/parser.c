@@ -20,8 +20,8 @@ void	store_tab(int fd, t_e *e)
 	char *line;
 
 	line = NULL;
-	printf("east : %d\n", e->east);
-	printf("south : %d\n", e->south);
+	//printf("Width of the map : %d\n", e->east);
+	//printf("Height of the map : %d\n", e->south);
 	if (!(e->tab = (char **)malloc(sizeof(char *) * e->south)))
 		exiterror();
 	while ((get_next_line(fd, &line)) == 1)
@@ -29,12 +29,12 @@ void	store_tab(int fd, t_e *e)
 		store_line_to_tab(e, line);
 		e->i++;
 	}
-	int g = 0;
-	while (g <= e->south) 
-	{
-		printf("%s\n", e->tab[g]);
-		g++;
-	}
+	//int g = 0;
+	// while (g <= e->south) 
+	// {
+	// 	printf("%s\n", e->tab[g]);
+	// 	g++;
+	// }
 	if (border_check(e) == -1)
 		exiterror();
 }	
@@ -46,30 +46,29 @@ void	store_tab(int fd, t_e *e)
 
 int		border_check(t_e *e)
 {
-	int i;
+	e->bou = 0;
 
-	i = 0;
-	while (i <= e->east)
+	while (e->bou <= e->east)
 	{
-		if (e->tab[0][i] != '1')
+		if (e->tab[0][e->bou] != '1')
 			return (-1);
-		i++;
+		e->bou++;
 	}
-	i = 1;
-	while (i <= (e->south - 1))
+	e->bou = 1;
+	while (e->bou <= (e->south - 1))
 	{
-		if (e->tab[i][0] != '1')
+		if (e->tab[e->bou][0] != '1')
 			return (-1);
-		if (e->tab[i][e->east] != '1')
+		if (e->tab[e->bou][e->east] != '1')
 			return (-1);
-		i++;
+		e->bou++;
 	}
-	i = 0;
-	while (i <= e->east)
+	e->bou = 0;
+	while (e->bou <= e->east)
 	{
-		if (e->tab[e->south][i] != '1')
+		if (e->tab[e->south][e->bou] != '1')
 			return (-1);
-		i++;
+		e->bou++;
 	}
 	return (1);
 }

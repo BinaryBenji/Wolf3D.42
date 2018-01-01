@@ -9,9 +9,9 @@
 #include <fcntl.h>
 #include "mlx.h"
 
-# define RED 0xAF1822
-# define GREEN 0x64AD6A
-# define BLUE 0x3BBDED
+// # define RED 0xAF1822
+// # define GREEN 0x64AD6A
+// # define BLUE 0x3BBDED
 
 typedef struct 		s_e
 {
@@ -29,13 +29,13 @@ typedef struct 		s_e
 
 	int				width;
 	int 			height;
+
 	double 			posX;
 	double 			posY;
   	double 			dirX;
   	double 			dirY; 
   	double 			planeX;
   	double			planeY;
-
   	double			cameraX;
   	double 			rayPosX;
   	double			rayPosY;
@@ -51,7 +51,6 @@ typedef struct 		s_e
     int 			side;
     int 			mapX;
     int				mapY;
-    int 			perpWallDist;
     int				lineHeight;
     int 			drawStart;
     int 			drawEnd;
@@ -62,8 +61,10 @@ typedef struct 		s_e
     double    draw_height;
     double    cam_WD;
     int   l;
-    char 			rem;
-    int 			help;
+    //int       perpWallDist;
+
+    //char 			rem;
+    //int 			help;
     int x;
     int 			color;
       char  **tab;
@@ -73,16 +74,20 @@ typedef struct 		s_e
       int 	south;
       int	xchecker;
       int	i;
+      int bou;
 
 
-      int lol;
+      //int lol;
 
       int tap_sprint;
       int tap_up;
       int tap_down;
       int tap_left;
       int tap_right;
+      int tap_reinit;
+      int tap_sprint_double;
 }			   		t_e;
+
 
 
 int   	usage(void);
@@ -100,6 +105,7 @@ void 	wall(t_e *e);
 void 	inits(t_e *e);
 void 	calc(t_e *e);
 int 	draw_map(t_e *e);
+void  init_map(t_e *e);
 int   hero_init(t_e *e);
 void  pix_to_img(t_e *e, int color);
 int   border_check(t_e *e);
@@ -114,6 +120,8 @@ void  key_down(t_e *e) ;
 void  key_left(t_e *e) ;
 void  key_right(t_e *e) ;
 void  key_sprint(t_e *e);
+void  key_sprint_double(t_e *e);
+void  key_reinit(t_e *e);
 
 
 #endif

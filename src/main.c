@@ -1,6 +1,37 @@
 #include "wolf3d.h"
 
 /*
+** "Wheel" represents all the hooks managing of the game
+**	And also the execution of the display.
+*/
+
+int 	wheel(t_e *e)
+{
+	renew_image(e);
+	if (e->tap_up == 1)
+		key_up(e);
+	if (e->tap_down == 1)
+		key_down(e);
+	if (e->tap_left == 1)
+		key_left(e);
+	if (e->tap_right == 1)
+		key_right(e);
+	if (e->tap_sprint == 1)
+		key_sprint(e);
+	else
+	{
+		e->moveSpeed = 0.03;
+		e->rotSpeed = 0.03;
+	}
+	if ((e->tap_sprint_double == 1) && (e->tap_sprint == 1)) 
+		key_sprint_double(e);
+	if (e->tap_reinit == 1)
+		key_reinit(e);
+	draw_map(e);
+	return (0);
+}
+
+/*
 **	Gives hero position according to the 'X' position
 **	of the given map.
 **	Also gives Speeds of the rotations & movement.
@@ -13,7 +44,6 @@ int 	hero_init(t_e *e)
 
 	i = 0;
 	j = 0;
-	ft_putstr("passed\n");
 	while (j <= e->south)
 	{
 		while (i <= e->east)
@@ -26,7 +56,7 @@ int 	hero_init(t_e *e)
 				e->dirY = 0;
 				e->rotSpeed = 0.03;
 				e->moveSpeed = 0.03;
-				printf("hero is sitting at : %lf - %lf", e->posX, e->posY);
+				//printf("Your hero is sitting at : %lf - %lf \n", e->posX, e->posY);
 				return (0);
 			}
 			i++;
@@ -51,25 +81,13 @@ void	init_map(t_e *e)
 	e->width = 1200;
 	e->height = 600;
 	e->x = 0;
-
 	e->color = 0x512F0D;
-	e->posX = 1.501;
-	e->posY = 1.501;
+	e->posX = 1;
+	e->posY = 1;
 	e->planeX = 0;
-	e->planeY = -0.8;
-	e->help = 1;
-
-	ft_putstr("passed2\n");
-	// e->posX = 1.5;
-	// e->posY = 1.5;
-	// e->dirX = 1;
-	// e->dirY = 0;
-	// e->planeX = 0;
-	// e->planeY = -0.8;
-	// e->moveSpeed = 1;
-	// e->rotSpeed = 1;
+	e->planeY = -0.9; // change
+	//ft_putstr("Passed the init of map.\n");
 }
-
 
 /*
 **	Inits the window.
@@ -87,8 +105,6 @@ void 	win_inits(t_e *e)
 	//e->imgptr_grass = mlx_xpm_file_to_image(e->mlx, "textures/grass.xpm", &(e->width), &(e->height));
 	//e->imgstr_grass = mlx_get_data_addr(e->imgptr_grass, &(e->bpp), &(e->s_l), &(e->endian));
 }
-
-
 
 /*
 **	Main : checks validity of the map.
@@ -114,13 +130,10 @@ int 	main(int argc, char **argv)
 	store_tab(fd, &e);
 	if (hero_init(&e) == -1)
 		return (error());
-
 	win_inits(&e);
-	// HOOKS
 	mlx_hook(e.win, 2, 1L<<0, strike, &e);
 	mlx_hook(e.win, 3, 1L<<1, release, &e);
 	mlx_hook(e.win, 17, 0, exit_cl, NULL);
-	// MISS CROIX
 	mlx_loop_hook(e.mlx, wheel, &e);
 	mlx_loop(e.mlx);
 	return (0);

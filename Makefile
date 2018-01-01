@@ -34,7 +34,8 @@ SRC_NAME = 			main.c \
 					draw.c \
 					events.c \
 					check.c \
-					dda.c
+					dda.c \
+ 					events_plus.c
 
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
