@@ -1,107 +1,116 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dda.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/02 11:49:47 by bzmuda            #+#    #+#             */
+/*   Updated: 2018/01/02 12:46:39 by bzmuda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
+/*
+**	Inits a ray, starting to the player's position to a wall of the map.
+*/
 
-void 	inits(t_e *e)
+void	inits(t_e *e)
 {
-	e->cameraX = 2 * e->x / (double)e->width - 1;
-	e->rayPosX = e->posX;
-	e->rayPosY = e->posY;
-	e->rayDirX = e->dirX + e->planeX * e->cameraX;
-	e->rayDirY = e->dirY + e->planeY * e->cameraX;
-	e->mapX = (int)e->rayPosX;
-	e->mapY = (int)e->rayPosY;
+	e->camera = 2 * e->x / (double)e->width - 1;
+	e->ray_pos_x = e->pos_x;
+	e->ray_pos_y = e->pos_y;
+	e->ray_dir_x = e->dir_x + e->plane_x * e->camera;
+	e->ray_dir_y = e->dir_y + e->plane_y * e->camera;
+	e->map_x = (int)e->ray_pos_x;
+	e->map_y = (int)e->ray_pos_y;
 	e->hit = 0;
-	e->side = 0; //changes
+	e->side = 0;
+	e->delta_dist_x = sqrt(1 + (e->ray_dir_y * e->ray_dir_y) /
+		(e->ray_dir_x * e->ray_dir_x));
+	e->delta_dist_y = sqrt(1 + (e->ray_dir_x * e->ray_dir_x) /
+		(e->ray_dir_y * e->ray_dir_y));
 }
 
+/*
+**	Gives direction of a ray according to the move.
+*/
 
-void 	dda_1(t_e *e)
+void	dda_1(t_e *e)
 {
-	e->deltaDistX = sqrt(1 + (e->rayDirY * e->rayDirY) / (e->rayDirX * e->rayDirX));
-	e->deltaDistY = sqrt(1 + (e->rayDirX * e->rayDirX) / (e->rayDirY * e->rayDirY));
-	if (e->rayDirX < 0)
+	if (e->ray_dir_x < 0)
 	{
-		e->stepX = -1;
-		e->sideDistX = (e->rayPosX - (double)e->mapX) * e->deltaDistX; // add double each
+		e->step_x = -1;
+		e->side_dist_x = (e->ray_pos_x - (double)e->map_x) * e->delta_dist_x;
 	}
 	else
 	{
-		e->stepX = 1;
-		e->sideDistX = ((double)e->mapX + 1.0 - e->rayPosX) * e->deltaDistX;
+		e->step_x = 1;
+		e->side_dist_x = ((double)e->map_x + 1.0
+			- e->ray_pos_x) * e->delta_dist_x;
 	}
-	if (e->rayDirY < 0)
+	if (e->ray_dir_y < 0)
 	{
-		e->stepY = -1;
-		e->sideDistY = (e->rayPosY - (double)e->mapY) * e->deltaDistY;
+		e->step_y = -1;
+		e->side_dist_y = (e->ray_pos_y - (double)e->map_y) * e->delta_dist_y;
 	}
 	else
 	{
-		e->stepY = 1;
-		e->sideDistY = ((double)e->mapY + 1.0 - e->rayPosY) * e->deltaDistY;
+		e->step_y = 1;
+		e->side_dist_y = ((double)e->map_y + 1.0
+			- e->ray_pos_y) * e->delta_dist_y;
 	}
 }
 
+/*
+**	Detects if the ray should go further :
+**	if a wall has been detected : then the ray should stop progressing.
+**	While there are no wall, make the ray progress.
+*/
 
-void 	dda_2(t_e *e)
+void	dda_2(t_e *e)
 {
 	while (e->hit == 0)
 	{
-		if (e->sideDistX < e->sideDistY)
+		if (e->side_dist_x < e->side_dist_y)
 		{
-			e->sideDistX += e->deltaDistX;
-			e->mapX += e->stepX;
+			e->side_dist_x += e->delta_dist_x;
+			e->map_x += e->step_x;
 			e->side = 0;
 		}
 		else
 		{
-			e->sideDistY += e->deltaDistY;
-			e->mapY += e->stepY;
+			e->side_dist_y += e->delta_dist_y;
+			e->map_y += e->step_y;
 			e->side = 1;
 		}
-		
-		if ((e->tab[e->mapX][e->mapY] == 49))
-			//printf("Map : %c\n = true", e->tab[e->mapX][e->mapY]);
+		if (e->tab[e->map_x][e->map_y] == 49)
 			e->hit = 1;
-			// printf("Map : %c\n = false", e->tab[e->mapX][e->mapY]);
 	}
 }
 
-
 /*
-**	Moves the camera according to the distance between 
-**		the wall and the camera.
+**	Moves the camera according to the distance between
+**	the wall and the camera.
 **	Blocks the camera in front of the wall if too close.
 */
 
-void 	wall(t_e *e)
+void	wall(t_e *e)
 {
-	// dist non redeclare
-
 	if (e->side == 0)
-		e->cam_WD = fabs((e->mapX - e->rayPosX + 
-			(1 - e->stepX) / 2) / e->rayDirX);
+		e->cam_wall = fabs((e->map_x - e->ray_pos_x +
+			(1 - e->step_x) / 2) / e->ray_dir_x);
 	else
-		e->cam_WD = fabs((e->mapY - e->rayPosY + 
-			(1 - e->stepY) / 2) / e->rayDirY);
-	if (e->cam_WD <= 0.05)
-		e->cam_WD = 0.05;   // ADD Or NOt
-
-
-	// MISS or not
-
-	// e->draw_height = abs(e->height / e->cam_WD);
-	// if ((e->drawStart = (-1 * (e->draw_height)) / e->draw_height + e->height) < 0)
-	// 	e->drawStart = 0;
-	// if ((e->drawEnd = e->draw_height / 2 + e->height / 2) >= e->height)
-	// 	e->drawEnd = e->height - 1;
-
-
-
-	e->lineHeight = abs((int)(e->height / e->cam_WD));
-	e->drawStart = (-1 * (e->lineHeight)) / 2 + e->height / 2;
-	if (e->drawStart < 0)
-		e->drawStart = 0;
-	e->drawEnd = e->lineHeight / 2 + e->height / 2;
-	if (e->drawEnd >= e->height)
-		e->drawEnd = e->height - 1;
+		e->cam_wall = fabs((e->map_y - e->ray_pos_y +
+			(1 - e->step_y) / 2) / e->ray_dir_y);
+	if (e->cam_wall <= 0.05)
+		e->cam_wall = 0.05;
+	e->line_height = abs((int)(e->height / e->cam_wall));
+	e->draw_start = (-1 * (e->line_height)) / 2 + e->height / 2;
+	if (e->draw_start < 0)
+		e->draw_start = 0;
+	e->draw_end = e->line_height / 2 + e->height / 2;
+	if (e->draw_end >= e->height)
+		e->draw_end = e->height - 1;
 }

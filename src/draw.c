@@ -1,75 +1,79 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/02 11:49:13 by bzmuda            #+#    #+#             */
+/*   Updated: 2018/01/02 12:50:29 by bzmuda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
-
 /*
-**	Fill pixels to the img : 
+**	Fill pixels to the img :
 **	For each pixels on the vertical (height)
 **	We give attribute a color to a pixel.
 */
 
-void 	fill_img_vertical(t_e *e) // static?
+void	fill_img_vertical(t_e *e)
 {
 	e->l = 0;
 	while (e->l < e->height)
 	{
-		if (e->l < e->drawStart)
+		if (e->l < e->draw_start)
 			pix_to_img(e, 0xd4cbe5);
-		else if (e->l >= e->drawStart && e->l <= e->drawEnd)
+		else if (e->l >= e->draw_start && e->l <= e->draw_end)
 			pix_to_img(e, e->color);
-		else // changes
+		else
 		{
 			if (e->hit == 1)
 				pix_to_img(e, 0x317b22);
-				// to try
-				//pix_to_img(e, 0xC00000A0);
-			
 		}
 		e->l++;
 	}
 }
 
-
 /*
 **	Destroys the previous image and create another one.
 */
 
-void 	renew_image(t_e *e)
+void	renew_image(t_e *e)
 {
 	mlx_destroy_image(e->mlx, e->imgptr);
 	e->imgptr = mlx_new_image(e->mlx, e->width, e->height);
 }
 
-
-
 /*
-**	Gives to a wall a color, according to the orientation.	
+**	Gives to a wall a color, according to the orientation.
 */
 
-void 	color_wall(t_e *e)
+void	color_wall(t_e *e)
 {
 	if (e->side == 0)
 	{
-		if (e->stepX < 0) // north
+		if (e->step_x < 0)
 			e->color = 0x78bc61;
-		else 				// south
+		else
 			e->color = 0xdce2c8;
 	}
 	else
 	{
-		if (e->stepY > 0) // east
+		if (e->step_y > 0)
 			e->color = 0x4f6d7a;
-		else //west
+		else
 			e->color = 0xe9806e;
 	}
 }
-
 
 /*
 **	Executes DDA algorithm, then builds the image
 ** 	Then finally put it into the screen.
 */
 
-int 	draw_map(t_e *e)
+int		draw_map(t_e *e)
 {
 	e->x = 0;
 	while (e->x < e->width)
@@ -80,13 +84,10 @@ int 	draw_map(t_e *e)
 		wall(e);
 		color_wall(e);
 		fill_img_vertical(e);
-		help(e);
 		e->x++;
 	}
-
-	// to try 
-	//mlx_put_image_to_window(e->mlx, e->win, e->imgptr_grass, 0, 0);
 	mlx_put_image_to_window(e->mlx, e->win, e->imgptr, 0, 0);
+	help(e);
 	return (0);
 }
 
@@ -94,14 +95,13 @@ int 	draw_map(t_e *e)
 **	Attributes a color to a given pixel.
 */
 
-void 	pix_to_img(t_e *e, int color)
+void	pix_to_img(t_e *e, int color)
 {
-	int i;
-	unsigned int p;
+	int				i;
+	unsigned int	p;
 
 	i = 0;
 	p = e->x * (e->bpp / 8) + e->l * (e->s_l);
-	
 	while (i < (e->bpp / 8))
 	{
 		e->imgstr[p + i] = color;
@@ -109,9 +109,3 @@ void 	pix_to_img(t_e *e, int color)
 		i++;
 	}
 }
-
-
-
-
-
-

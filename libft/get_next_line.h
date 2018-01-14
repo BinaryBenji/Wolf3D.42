@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bzmuda <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 15:23:25 by bzmuda            #+#    #+#             */
-/*   Updated: 2017/02/28 16:23:44 by bzmuda           ###   ########.fr       */
+/*   Updated: 2018/01/14 15:43:23 by bzmuda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFF_SIZE 7
+# define BUFF_SIZE 1
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>

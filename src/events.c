@@ -1,120 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/02 11:50:00 by bzmuda            #+#    #+#             */
+/*   Updated: 2018/01/02 12:58:53 by bzmuda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
-
-/*
-**	Key handler : 
-** 	For AZERTY : UP = 122, DOWN = 115, LEFT = 113, RIGHT, 100
-** 	For QWERTY : 
-*/
-
 
 /*
 **	UP key move
 */
 
-void	key_up(t_e *e) 
+void	key_up(t_e *e)
 {
-		if (e->tab[(int)(e->posX + e->dirX * e->moveSpeed)]
-			[(int)(e->posY)] != 49)
-				e->posX += e->dirX * e->moveSpeed;
-			//e->posX = e->posX + 0.01;
-		if (e->tab[(int)(e->posX)]
-			[(int)(e->posY + e->dirY * e->moveSpeed)] != 49)
-				e->posY += e->dirY * e->moveSpeed;
-		// e->posX = e->posX + 0.01;
-		// e->dirX = e->dirX + 0.01;
-		// printf("posX = %g", e->posX);
-		// printf("posY = %g", e->posY);
-
+	if (e->tab[(int)(e->pos_x + e->dir_x * e->move_speed)]
+		[(int)(e->pos_y)] != 49)
+		e->pos_x += e->dir_x * e->move_speed;
+	if (e->tab[(int)(e->pos_x)]
+		[(int)(e->pos_y + e->dir_y * e->move_speed)] != 49)
+		e->pos_y += e->dir_y * e->move_speed;
 }
 
 /*
 **	DOWN key move
 */
 
-void		key_down(t_e *e)
+void	key_down(t_e *e)
 {
-		if (e->tab[(int)(e->posX - e->dirX * e->moveSpeed)]
-			[(int)(e->posY)] != 49)
-				e->posX -= e->dirX * e->moveSpeed;
-		if (e->tab[(int)(e->posX)]
-			[(int)(e->posY - e->dirY * e->moveSpeed)] != 49)
-				e->posY -= e->dirY * e->moveSpeed;
-		//e->posX = e->posX - 0.01;
-		// e->posX = e->posX - 0.01;
-		// e->dirX = e->dirX - 0.01;
+	if (e->tab[(int)(e->pos_x - e->dir_x * e->move_speed)]
+		[(int)(e->pos_y)] != 49)
+		e->pos_x -= e->dir_x * e->move_speed;
+	if (e->tab[(int)(e->pos_x)]
+		[(int)(e->pos_y - e->dir_y * e->move_speed)] != 49)
+		e->pos_y -= e->dir_y * e->move_speed;
 }
 
 /*
 **	LEFT key move
 */
 
-void		key_left(t_e *e) // Left Rotation
+void	key_left(t_e *e)
 {
-		e->oldDirX = e->dirX;
-		e->dirX = e->dirX * cos(e->rotSpeed)- e->dirY * sin(e->rotSpeed);
-		e->dirY = e->oldDirX * sin(e->rotSpeed) + e->dirY * cos(e->rotSpeed);
-
-		e->oldPlaneX = e->planeX;
-		e->planeX = e->planeX * cos(e->rotSpeed) - e->planeY * sin(e->rotSpeed);
-		e->planeY = e->oldPlaneX * sin(e->rotSpeed) + e->planeY * cos(e->rotSpeed);
-		// e->dirY = e->dirY + 0.01;
+	e->old_dir_x = e->dir_x;
+	e->dir_x = e->dir_x * cos(e->rot_speed) - e->dir_y * sin(e->rot_speed);
+	e->dir_y = e->old_dir_x * sin(e->rot_speed) + e->dir_y * cos(e->rot_speed);
+	e->old_plane_x = e->plane_x;
+	e->plane_x = e->plane_x * cos(e->rot_speed)
+		- e->plane_y * sin(e->rot_speed);
+	e->plane_y = e->old_plane_x * sin(e->rot_speed)
+		+ e->plane_y * cos(e->rot_speed);
 }
 
 /*
 **	RIGHT key move
 */
 
-void		key_right(t_e *e) // Right Rotation
+void	key_right(t_e *e)
 {
-		e->oldDirX = e->dirX;
-		e->dirX = e->dirX * cos(e->rotSpeed * -1) - e->dirY * sin(e->rotSpeed * -1);
-		e->dirY = e->oldDirX * sin(e->rotSpeed * -1) + e->dirY * cos(e->rotSpeed * -1);
-
-		e->oldPlaneX = e->planeX;
-		e->planeX = e->planeX * cos(e->rotSpeed * -1) - e->planeY * sin(e->rotSpeed * -1);
-		e->planeY = e->oldPlaneX * sin(e->rotSpeed * -1) + e->planeY * cos(e->rotSpeed * -1);
-		//e->dirY = e->dirY - 0.01;
-	//e->dirX = e->dirX + 0.01;
+	e->old_dir_x = e->dir_x;
+	e->dir_x = e->dir_x * cos(e->rot_speed * -1)
+		- e->dir_y * sin(e->rot_speed * -1);
+	e->dir_y = e->old_dir_x * sin(e->rot_speed * -1)
+		+ e->dir_y * cos(e->rot_speed * -1);
+	e->old_plane_x = e->plane_x;
+	e->plane_x = e->plane_x * cos(e->rot_speed * -1)
+		- e->plane_y * sin(e->rot_speed * -1);
+	e->plane_y = e->old_plane_x * sin(e->rot_speed * -1)
+		+ e->plane_y * cos(e->rot_speed * -1);
 }
-
-
-
-
-// int		key_pressed(int keycode, t_e *e)
-// {
-// 	if (keycode == 65307) // Echap
-// 		exit(0);
-// 	printf("Keycode : %d\n",keycode);
-// 	e->ok = 2;
-// 	e->ok = 3;
-// 	key_up(e);
-// 	key_down(keycode, e);
-// 	key_left(keycode, e);
-// 	key_right(keycode, e);
-// 	if (keycode == 104 && e->help == 1)
-// 	{
-// 		help(e);
-// 		e->help = 0;
-// 	} 
-// 	else if (keycode == 104 && e->help == 0) // H
-// 	{
-// 		mlx_clear_window(e->mlx, e->win);
-// 		draw_map(e);
-// 		e->help = 1;
-// 	}
-// 	return (0);
-// }
 
 /*
 **	Put the hero back to the 'X' spawn.
 */
 
-void 	key_reinit(t_e *e)
+void	key_reinit(t_e *e)
 {
 	hero_init(e);
-	e->planeX = 0;
-	e->planeY = -0.9;
+	e->plane_x = 0;
+	e->plane_y = -0.9;
 }
-
-
-

@@ -6,7 +6,7 @@
 /*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/11 19:33:28 by bzmuda            #+#    #+#             */
-/*   Updated: 2017/01/06 10:41:07 by bzmuda           ###   ########.fr       */
+/*   Updated: 2018/01/02 14:59:24 by bzmuda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct		s_list
 **	Get next line
 */
 
-int		get_next_line(const int fd, char **line);
+int					get_next_line(const int fd, char **line);
 
 /*
 **	Write

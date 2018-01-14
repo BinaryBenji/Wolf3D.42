@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bzmuda <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: bzmuda <bzmuda@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 15:23:25 by bzmuda            #+#    #+#             */
-/*   Updated: 2017/02/28 16:23:44 by bzmuda           ###   ########.fr       */
+/*   Updated: 2018/01/14 15:43:36 by bzmuda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft.h"
 
 /*
 **	Join 2 strings into a new string. Free the s° lines if needed
@@ -77,10 +78,9 @@ char	*handle_end(char *bufr, int choice)
 		str[j] = '\0';
 		return (str);
 	}
-	str = ft_strnew(ft_strlen(bufr) - (i++) + 1);
+	str = ft_strnew(ft_strlen(bufr) - (i++));
 	while (bufr[i])
 		str[j++] = bufr[i++];
-	str[j] = '\0';
 	free(bufr);
 	return (str);
 }
@@ -137,6 +137,8 @@ int		get_next_line(const int fd, char **line)
 		bufr = "\0";
 	}
 	*line = ft_strjoin_free(*line, handle_end(bufr, 1), 1, 1);
-	bufr = handle_end(bufr, 0);
+	if (bufr)
+		bufr = handle_end(bufr, 0);
+	ft_strdel(&bufr);
 	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/05/30 09:43:03 by bzmuda            #+#    #+#              #
-#    Updated: 2017/05/30 09:43:09 by bzmuda           ###   ########.fr        #
+#    Updated: 2018/01/02 15:04:18 by bzmuda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ CC = 				gcc
 
 #	Flags for norme + LLDB
 CFLAGS = 			-Wall -Wextra -Werror -g 
-#GFLAGS =			-lmlx -framework OpenGL -framework AppKit
-GFLAGS = 			-L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11
+GFLAGS =			-lmlx -framework OpenGL -framework AppKit
+#GFLAGS = 			-L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11
 
 #	Headers infos
 HEA_PATH = 			./src
@@ -35,7 +35,7 @@ SRC_NAME = 			main.c \
 					events.c \
 					check.c \
 					dda.c \
- 					events_plus.c
+					events_plus.c
 
 SRC = 				$(addprefix $(SRC_PATH)/,$(SRC_NAME))		
 
@@ -53,7 +53,6 @@ all: $(NAME)
 $(NAME): 			$(OBJ) $(HEA)
 					@make -C libft/
 					@$(CC) $(CFLAGS) $(OBJ) $(GFLAGS) libft/libft.a -o $(NAME) -lm
-					# Retirer -LM sur les Macs maybe.
 					@echo "Wolf3D compilation complete."
 
 %.o: 				%.c $(HEA)

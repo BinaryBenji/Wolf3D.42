@@ -1,18 +1,29 @@
-#include "wolf3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bzmuda <bzmuda@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/02 11:49:32 by bzmuda            #+#    #+#             */
+/*   Updated: 2018/01/02 12:42:57 by bzmuda           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "wolf3d.h"
 
 /*
 **	A line is "ok" if it contains only digits and only one X for one map.
 */
 
-int 	is_line_ok(char *line, t_e *e)
+int		is_line_ok(char *line, t_e *e)
 {
 	int i;
 
 	i = 0;
 	while (line[i])
 	{
-		if ((ft_isdigit(line[i]) > 0) || (line[i] == 'X'))
+		if ((line[i] == '0') || (line[i] == 'X') || (line[i] == '1'))
 		{
 			if (line[i] == 'X')
 				e->xchecker++;
@@ -23,6 +34,7 @@ int 	is_line_ok(char *line, t_e *e)
 		else
 			return (0);
 	}
+	free(line);
 	return (1);
 }
 
@@ -32,10 +44,10 @@ int 	is_line_ok(char *line, t_e *e)
 **	Then check content of each line.
 */
 
-int 	check(int fd, t_e *e)
+int		check(int fd, t_e *e)
 {
-	char 			*line;
-	
+	char	*line;
+
 	line = NULL;
 	while ((get_next_line(fd, &line)) == 1)
 	{
@@ -51,6 +63,7 @@ int 	check(int fd, t_e *e)
 		}
 		e->south++;
 	}
+	free(line);
 	e->east = e->previous - 1;
 	e->south--;
 	if (e->xchecker != 1)
@@ -64,10 +77,9 @@ int 	check(int fd, t_e *e)
 **	Return cases for false map
 */
 
-int 	false_map(int fd, t_e *e)
+int		false_map(int fd, t_e *e)
 {
 	if (check(fd, e) == -1)
 		return (-1);
 	return (1);
 }
-
