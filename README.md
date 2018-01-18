@@ -1,4 +1,4 @@
-# Wolf3d.42
+# Wolf3D.42
 <h3> Wolfenstein 3D remake. </h3>
 
 <h3> How it works : </h3>
