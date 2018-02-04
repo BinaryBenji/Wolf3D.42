@@ -13,4 +13,4 @@ Compile project : <code> make </code><br/>
 Run the project : <code> ./wolf3d [map]</code>
 
 <h3> Paradise map :</h3>
-<img src="https://lh6.googleusercontent.com/8Cf--mbpy0ImVp_61wF1qYaQM3S0pUma3cmEy94ofu74-K0RcTyfPyASgR2cQfa_wfzfA_nD2xXcZSPlVghT=w1858-h987" style="max-width=50%"/>
+<img src="https://image.noelshack.com/fichiers/2018/05/7/1517756908-screen.png" style="max-width=50%"/>
